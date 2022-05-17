@@ -1,7 +1,0 @@
-- name: Install packages
-  package:
-    name:
-      - atop
-      - mc
-      - tmux
-      - tree

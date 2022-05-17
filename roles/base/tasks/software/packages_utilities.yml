@@ -1,0 +1,32 @@
+- name: Install packages
+  package:
+    state: latest
+    name:
+      - at
+      - atop
+      - aptitude
+      - colordiff
+      - curl
+      - htop
+      - iotop
+      - lsof
+      - mc
+      - mosh
+      - ncdu
+      - neofetch
+      - net-tools
+      - nmap
+      - ranger
+      - rsync
+      - screen
+      - software-properties-common
+      - sshfs
+      - tcpdump
+      - tmux
+      - traceroute
+      - tree
+      - unzip
+      - vim
+      - wget
+      - whois
+      - zsh

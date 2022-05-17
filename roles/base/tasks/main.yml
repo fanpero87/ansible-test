@@ -1,5 +1,10 @@
 - block:
+    # Make sure these two users exist on the system
     - import_tasks: users/ansible.yml
     - import_tasks: users/dev.yml
-    - import_tasks: cron.yml
-    - import_tasks: packages.yml
+
+    # Install software
+    - import_tasks: software/packages_utilities.yml
+
+    # Setup automate crontask
+    - import_tasks: system_setup/cron.yml
