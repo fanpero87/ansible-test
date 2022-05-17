@@ -63,3 +63,122 @@
     - { src: "vim/vimrc", dest: ".vimrc" }
     - { src: "zsh/zshrc", dest: ".zshrc" }
     - { src: "inputrc", dest: ".inputrc" }
+
+- name: Clone tmux-completion plugin repository
+  git:
+    repo: https://github.com/srsudar/tmux-completion.git
+    dest: /home/dev/.tmux/plugins/completion
+    force: yes
+
+- name: Clone tmux-continuum plugin repository
+  git:
+    repo: https://github.com/tmux-plugins/tmux-continuum
+    dest: /home/dev/.tmux/plugins/continuum
+    force: yes
+
+- name: Clone tmux-resurrect plugin repository
+  git:
+    repo: https://github.com/tmux-plugins/tmux-resurrect
+    dest: /home/dev/.tmux/plugins/resurrect
+    force: yes
+
+- name: Copy individual zsh config files
+  copy:
+    src: files/users/dev/zsh/{{ item.src }}
+    dest: /home/dev/.zsh/{{ item.src }}
+    owner: dev
+    group: dev
+    mode: 0600
+  with_items:
+    - { src: "aliases.zsh" }
+    - { src: "bindkey.zsh" }
+    - { src: "completion.zsh" }
+    - { src: "exports.zsh" }
+    - { src: "functions.zsh" }
+    - { src: "history.zsh" }
+    - { src: "path.zsh" }
+    - { src: "plugins.zsh" }
+    - { src: "prompt.zsh" }
+    - { src: "setopt.zsh" }
+    - { src: "theming.zsh" }
+
+- name: Copy vim ftype files
+  copy:
+    src: files/users/dev/vim/{{ item.src }}
+    dest: /home/dev/.vim/ftplugin/{{ item.src }}
+    owner: dev
+    group: dev
+    mode: 0600
+  with_items:
+    - { src: "cmake.vim" }
+    - { src: "cpp.vim" }
+    - { src: "html.vim" }
+    - { src: "perl.vim" }
+    - { src: "python.vim" }
+    - { src: "ruby.vim" }
+    - { src: "sql.vim" }
+    - { src: "xml.vim" }
+
+- name: Copy vim color files
+  copy:
+    src: files/users/dev/vim/{{ item.src }}
+    dest: /home/dev/.vim/colors/{{ item.src }}
+    owner: dev
+    group: dev
+    mode: 0600
+  with_items:
+    - { src: "bubblegum-256-dark.vim" }
+    - { src: "darktango.vim" }
+    - { src: "jellybeans.vim" }
+    - { src: "xoria256.vim" }
+    - { src: "zenburn.vim" }
+
+- name: Install pathogen
+  copy:
+    src: files/users/dev/vim/{{ item.src }}
+    dest: "{{ item.dest }}"
+    owner: dev
+    group: dev
+    mode: 0700
+  with_items:
+    - { src: "pathogen.vim", dest: "/home/dev/.vim/autoload/pathogen.vim" }
+
+- name: Checkout git repositories
+  become: yes
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
+    force: yes
+  with_items:
+    - {
+        repo: "https://github.com/ctrlpvim/ctrlp.vim.git",
+        dest: "/home/dev/.vim/bundle/ctrlp.vim",
+      }
+    - {
+        repo: "https://github.com/davidhalter/jedi-vim.git",
+        dest: "/home/dev/.vim/bundle/jedi-vim",
+      }
+    - {
+        repo: "https://github.com/pearofducks/ansible-vim",
+        dest: "/home/dev/.vim/bundle/ansible-vim",
+      }
+    - {
+        repo: "https://github.com/rhysd/vim-grammarous.git",
+        dest: "/home/dev/.vim/bundle/vim-grammarous",
+      }
+    - {
+        repo: "https://github.com/ron89/thesaurus_query.vim",
+        dest: "/home/dev/.vim/bundle/thesaurus_query",
+      }
+    - {
+        repo: "https://github.com/scrooloose/nerdtree.git",
+        dest: "/home/dev/.vim/bundle/nerdtree",
+      }
+    - {
+        repo: "https://github.com/tpope/vim-obsession.git",
+        dest: "/home/dev/.vim/bundle/vim-obsession",
+      }
+    - {
+        repo: "https://github.com/vim-syntastic/syntastic.git",
+        dest: "/home/dev/.vim/bundle/syntastic",
+      }
