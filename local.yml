@@ -4,6 +4,10 @@
   become: true #to eanble sudo
 
   tasks:
-    - name: install atop
+    - name: Install packages
       package:
-        name: atop
+        name:
+          - atop
+          - mc
+          - tmux
+          - tree
