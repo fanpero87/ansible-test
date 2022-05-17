@@ -1,13 +1,7 @@
 ---
 - hosts: localhost # server we are running this againts
   connection: local # since we are running this directly on the server
-  become: true #to eanble sudo
-
-  pre-tasks: # Something you want to do before anything else
-    - name: Update Repositories
-      apt:
-        update_cache: yes # the same as doing "apt update"
-      changed_when: False #
+  become: true # to enable sudo
 
   tasks:
     - name: Install packages
