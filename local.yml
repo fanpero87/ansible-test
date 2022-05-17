@@ -3,6 +3,12 @@
   connection: local # since we are running this directly on the server
   become: true # to enable sudo
 
+  pre_tasks: # Something you want to do before anything else
+    - name: Update Repositories
+      apt:
+        update_cache: yes # the same as doing "apt update"
+      changed_when: False #
+
   tasks:
     - name: Install packages
       package:
