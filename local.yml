@@ -10,10 +10,4 @@
       changed_when: False #
 
   tasks:
-    - name: Install packages
-      package:
-        name:
-          - atop
-          - mc
-          - tmux
-          - tree
+    - include: tasks/packages.yml
