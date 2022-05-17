@@ -1,0 +1,65 @@
+- name: Create User Group
+  group:
+    name: dev
+    state: present
+
+- name: Create User dev
+  user:
+    name: dev
+    group: dev
+    groups: adm,ansible,sudo
+    state: present
+    comment: "Developer User"
+    password: "{{ 'Password@1' | password_hash('sha512') }}"
+    shell: /bin/bash
+
+- name: Copy sudoers_ansible
+  copy:
+    src: files/users/dev/sudoers_dev
+    dest: /etc/sudoers.d/dev
+    owner: root
+    group: root
+    mode: 0440
+
+- name: Create config directories
+  file:
+    path: /home/dev/{{ item.dir }}
+    state: directory
+    owner: dev
+    group: dev
+    mode: 0700
+  with_items:
+    - { dir: ".bash" }
+    - { dir: ".config" }
+    - { dir: ".config/htop" }
+    - { dir: ".config/mc" }
+    - { dir: ".tmux" }
+    - { dir: ".tmux/config" }
+    - { dir: ".tmux/plugins" }
+    - { dir: ".vim" }
+    - { dir: ".vim/autoload" }
+    - { dir: ".vim/bundle" }
+    - { dir: ".vim/colors" }
+    - { dir: ".vim/ftplugin" }
+    - { dir: ".zsh" }
+
+- name: Copy config files
+  copy:
+    src: files/users/dev/{{ item.src }}
+    dest: /home/dev/{{ item.dest }}
+    owner: dev
+    group: dev
+    mode: 0600
+  with_items:
+    - { src: "bash/bash_aliases", dest: ".bash/bash_aliases" }
+    - { src: "bash/bash_functions", dest: ".bash/bash_functions" }
+    - { src: "bash/bash_profile", dest: ".bash_profile" }
+    - { src: "bash/bash_prompt", dest: ".bash/bash_prompt" }
+    - { src: "bash/bashrc", dest: ".bashrc" }
+    - { src: "bash/profile", dest: ".profile" }
+    - { src: "git/gitconfig", dest: ".gitconfig" }
+    - { src: "htop/htoprc", dest: ".config/htop/htoprc" }
+    - { src: "tmux/tmux.conf", dest: ".tmux.conf" }
+    - { src: "vim/vimrc", dest: ".vimrc" }
+    - { src: "zsh/zshrc", dest: ".zshrc" }
+    - { src: "inputrc", dest: ".inputrc" }
