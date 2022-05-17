@@ -1,9 +1,9 @@
- ---
- - hosts: localhost # which host we are running this againts 
-   connection: local # because we are running ansible-pull locally on the pc
-   become: true # to become sudo on the server
- 
-   tasks:
-   - name: install atop
-     package:
-       name: atop
+---
+- hosts: localhost # server we are running this againts
+  connection: local # since we are running this directly on the server
+  become: true #to eanble sudo
+
+  tasks:
+    - name: install atop
+      package:
+        name: atop
