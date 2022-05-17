@@ -1,0 +1,31 @@
+- name: Ensure account is locked
+  user:
+    name: root
+    password_lock: yes
+
+- name: Create config directories
+  file:
+    path: /root/{{ item.dir }}
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+  with_items:
+    - { dir: ".vim" }
+    - { dir: ".vim/colors" }
+
+- name: Copy config files
+  copy:
+    src: files/users/root/{{ item.src }}
+    dest: /root/{{ item.dest}}
+    owner: root
+    group: root
+    mode: 0600
+  with_items:
+    - { src: "bash/bash_profile", dest: ".bash_profile" }
+    - { src: "bash/bashrc", dest: ".bashrc" }
+    - { src: "bash/profile", dest: ".profile" }
+    - { src: "tmux/tmux.conf", dest: ".tmux.conf" }
+    - { src: "vim/vimrc", dest: ".vimrc" }
+    - { src: "vim/xoria256.vim", dest: ".vim/colors/xoria256.vim" }
+    - { src: "zsh/zshrc", dest: ".zshrc" }

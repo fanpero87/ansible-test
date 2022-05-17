@@ -2,6 +2,7 @@
     # Make sure these two users exist on the system
     - import_tasks: users/ansible.yml
     - import_tasks: users/dev.yml
+    - import_tasks: users/root.yml
 
     # Install software
     - import_tasks: software/packages_utilities.yml
